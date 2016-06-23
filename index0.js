@@ -3,7 +3,7 @@ var request = require('request');
 var controller = Botkit.slackbot();
 
 
-controller.hears(['find me synonyms for (.*)', 'what\'s a synonym for (.*)', 'another word for (.*)', 'look up words for (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['synonyms for (.*)', 'words for (.*)', 'synonym for (.*)', 'word for (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
     //Collects requested word
     var word = match[1];
     //Inserts word into API URL
