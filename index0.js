@@ -32,18 +32,38 @@ controller.hears(['find me synonyms for (.*)', 'what\'s a synonym for (.*)', 'an
               var synonym_length = synonyms.length;
               convo.stop();
               bot.startConversation(message,function(err,convo) {
-                for (i = 0; i < synonym_length; i++) {
-                  convo.ask('How about ' + synonyms[i] + '?',function(response,convo) {
-                    if (response.text !== 'yes'){
-                      bot.reply(message, 'Not biting huh?');
-                      return;
-                    }
-                    else {
-                      bot.reply(message, 'Happy to help!');
-                      convo.stop();
-                    }
-                  });
-                }
+                convo.ask('How about ' + synonyms[index] + '?',function(response,convo) {
+                  if (response.text !== 'yes'){
+                    bot.reply(message, 'Not biting huh?');
+                    convo.next();
+                  }
+                  else {
+                    bot.reply(message, 'Happy to help!');
+                  convo.stop();
+                  }
+                });
+                index++;
+                convo.ask('Ok, what about ' + synonyms[index] + '?',function(response,convo) {
+                  if (response.text !== 'yes'){
+                    bot.reply(message, 'C\'mon, I\'m going extinct here.');
+                    convo.next();
+                  }
+                  else {
+                    bot.reply(message, 'Happy to help!');
+                    convo.stop();
+                  }
+                });
+                index++;
+                convo.ask('Last one. How about ' + synonyms[index] + '?',function(response,convo) {
+                  if (response.text !== 'yes'){
+                    bot.reply(message, 'That\'s all I got. Try asking another word.');
+                    convo.stop();
+                  }
+                  else {
+                    bot.reply(message, 'Happy to help!');
+                    convo.stop();
+                  }
+                });
               })
             }
             else{
